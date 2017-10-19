@@ -38,6 +38,9 @@ $cbr set packet_size_ 1000
 $cbr set rate_ 1mb
 $cbr set random_ false
 
+$ns at 0.1 "$cbr start"
+$ns at 4.9 "$cbr stop"
+
 puts "CBR packet size = [$cbr set packet_size_]"
 puts "CBR interval = [$cbr set interval_]"
 $ns run
