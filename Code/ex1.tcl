@@ -1,6 +1,10 @@
+set variant [lindex $argv 0]
+set rate [lindex $argv 1]
+set packet_size [lindex $argv 2]
+set file_name [lindex $argv 3]
 set ns [new Simulator]
 #Open the trace file (before you start the experiment!)
-set tf [open output.tr w]
+set tf [open $file_name w]
 $ns trace-all $tf
 
 set n1 [$ns node]
@@ -16,7 +20,12 @@ $ns duplex-link $n3 $n4 10Mb 0ms DropTail
 $ns duplex-link $n3 $n6 10Mb 0ms DropTail
 $ns duplex-link $n5 $n2 10Mb 0ms DropTail
 
-set tcp [new Agent/TCP]
+if {$variant eq "Tahoe"} {
+    set tcp [new Agent/TCP]
+} else {
+    set tcp [new Agent/TCP/$variant]
+
+}
 $tcp set class_ 2
 $ns attach-agent $n1 $tcp
 set sink [new Agent/TCPSink]
@@ -34,8 +43,8 @@ $udp set fid_ 2
 set cbr [new Application/Traffic/CBR]
 $cbr attach-agent $udp
 $cbr set type_ CBR
-$cbr set packet_size_ 1000
-$cbr set rate_ 1mb
+$cbr set packet_size_ $packet_size
+$cbr set rate_ $rate
 $cbr set random_ false
 
 $ns at 0.1 "$cbr start"
@@ -46,3 +55,4 @@ puts "CBR interval = [$cbr set interval_]"
 $ns run
 # Close the trace file (after you finish the experiment!)
 close $tf
+
