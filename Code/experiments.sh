@@ -6,7 +6,7 @@
 ## declare an array variable
 declare -a variants=("Vegas" "Reno" "Newreno" "Tahoe")
 declare -a rates=($(seq 1 10 ))
-declare -a packet_sizes=($(seq 500 500 10000 ))
+declare -a packet_sizes=($(seq 500 2500 10000 ))
 
 #declare -a variants=("Vegas" "Reno" "Newreno" "Tahoe")
 #declare -a rates=($(seq 1 3 ))
@@ -23,7 +23,7 @@ do
 	    ##echo "$i , $j, $k"
 	    #create file in the current directory directory
 	    touch "${i}_${j}_${k}.tr"
-	    ns ex1.tcl "$i"  "$j" "$k" "${i}_${j}_${k}.tr"
+	    ns ex1.tcl "$i"  "${j}mb" "$k" "${i}_${j}_${k}.tr"
 	done
     done
 done
