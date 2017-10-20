@@ -4,13 +4,13 @@
 ##3rd arg: packet size
 ##3rd arg: tracefile
 ## declare an array variable
-#declare -a variants=("Vegas" "Reno" "NewReno" "Tahoe")
-#declare -a rates=($(seq 1 10 ))
-#declare -a packet_sizes=($(seq 500 500 10000 ))
-
 declare -a variants=("Vegas" "Reno" "Newreno" "Tahoe")
-declare -a rates=($(seq 1 3 ))
-declare -a packet_sizes=($(seq 500 500 1000 ))
+declare -a rates=($(seq 1 10 ))
+declare -a packet_sizes=($(seq 500 500 10000 ))
+
+#declare -a variants=("Vegas" "Reno" "Newreno" "Tahoe")
+#declare -a rates=($(seq 1 3 ))
+#declare -a packet_sizes=($(seq 500 500 1000 ))
 
 ##declare -a outputfiles=("element1" "element2" "element3")
 

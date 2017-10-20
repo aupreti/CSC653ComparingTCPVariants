@@ -26,12 +26,18 @@ if {$variant eq "Tahoe"} {
     set tcp [new Agent/TCP/$variant]
 
 }
-$tcp set class_ 2
+##$tcp set class_ 2
 $ns attach-agent $n1 $tcp
 set sink [new Agent/TCPSink]
 $ns attach-agent $n4 $sink
 $ns connect $tcp $sink
-$tcp set fid_ 1
+##$tcp set fid_ 1
+
+
+set ftp [new Application/FTP]
+$ftp attach-agent $tcp
+$ftp set type_ FTP
+##$ns connect $tcp $sink
 
 set udp [new Agent/UDP]
 $ns attach-agent $n2 $udp
@@ -47,6 +53,8 @@ $cbr set packet_size_ $packet_size
 $cbr set rate_ $rate
 $cbr set random_ false
 
+$ns at 0.1 "$ftp start"
+$ns at 4.9 "$ftp stop"
 $ns at 0.1 "$cbr start"
 $ns at 4.9 "$cbr stop"
 
