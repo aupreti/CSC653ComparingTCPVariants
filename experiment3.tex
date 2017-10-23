@@ -1,3 +1,5 @@
+\section{Experiment 3: Influence of Queuing}
+
 This experiment analyzes the performance of TCP Reno and TCP Sack using the queuing algorithms: DropTail and RED. TCP Sack, increases and decreases the congestion window the same as TCP Reno does, when dealing with the first packet loss. Upon the first sign of packet loss, both variants cut the congestion window in half, and proceed to retransmit the lost packet. 
 
 In situations involving multiple packet losses, TCP Sack waits until the number of outstanding, or yet to be acknowledged packets, is less than the congestion window. While in fast recovery, TCP Sack keeps a record of outstanding packets as well as a corresponding counter. Reno only has the foresight to keep track of a single lost packet. Sack uses partial acknoweldgements to decrease the counter of outstanding packets at a rate which increases the congestion window faster than slowstart, which is why the performance of Sack benefits from a slightly higher throughput and a slightly lower latency than Reno.
