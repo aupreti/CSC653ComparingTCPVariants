@@ -3,6 +3,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import defaultdict
 import sys
+import pdb
 import numpy as np
 
 
@@ -51,12 +52,15 @@ def parse(filename):
     total_trans_time = 0
     tp_1_4 = list()
     tp_5_6 = list()
+    psum_14, psum_56 = 0, 0
+    smallest14, smallest56 = 100, 100
+    biggest14, biggest56 = -5, -5
     for k, v in sorted_outputs.items():
-        tp = -1 # if packet transmission incomplete
         trans_time = v[-1]["time"] - v[0]["time"]
         total_trans_time += trans_time
 
         next_iter = 0
+
         for value in v:
             if value["event"] == "d":
                 drop_ctr += 1
@@ -64,19 +68,32 @@ def parse(filename):
                 break
             
         if next_iter == 1:
-            continue
+            continue        
             
         if v[0]["fid"] == 5:
+            psum_14 += v[0]["p_size"]
+            if v[0]["time"] < smallest14:
+                smallest14 = v[0]["time"]
+            if v[-1]["time"] > biggest14:
+                biggest14 = v[-1]["time"]
             tp_1_4.append(v[0]["p_size"] /  (v[-1]["time"] - v[0]["time"]))
         if v[0]["fid"] == 10:
+            psum_56 += v[0]["p_size"]
+            if v[0]["time"] < smallest56:
+                smallest56 = v[0]["time"]
+            if v[-1]["time"] > biggest56:
+                biggest56 = v[-1]["time"]
             tp_5_6.append(v[0]["p_size"] /  (v[-1]["time"] - v[0]["time"]))
-        
 
         tp = v[0]["p_size"] / trans_time
         num_trans += 1
         throughput_sum += tp
         throughputs[k] = tp
 
+    print "THROUGHPUT 1-4: ", psum_14/(biggest14-smallest14)
+    print "THROUGHPUT 5-6: ", psum_56/(biggest56-smallest56)
+
+        
     avg_tp = throughput_sum/float(num_trans)/1000000
     avg_lat = total_trans_time/float(num_trans)
     drop_rate = drop_ctr

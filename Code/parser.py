@@ -52,7 +52,8 @@ def parse(filename):
         p_id = int(parts[-1])
         output["src_addr"] = parts[-4]
         output["dest_addr"] = parts[-3]
-        outputs[p_id].append(output)
+        if output["p_type"] = "tcp":
+            outputs[p_id].append(output)
     sorted_outputs = defaultdict(list)
     for k,v in outputs.items():
         newlist = sorted(v, key=lambda k: k['time']) 
@@ -64,23 +65,30 @@ def parse(filename):
     throughput_sum = 0
     num_trans = 0
     total_trans_time = 0
+    psum, smallest, biggest = 0, 100, -5
     for k, v in sorted_outputs.items():
         tp = -1 # if packet transmission incomplete
         trans_time = v[-1]["time"] - v[0]["time"]
         total_trans_time += trans_time
         
-        #if not (v[-1]["event"] == "r" and float(v[-1]["to_node"]) == float(v[-1]["dest_addr"])):
         for value in v:
             if value["event"] == "d":
                 drop_ctr += 1
         if trans_time == 0:
             continue
+
+        psum += v[0]["p_size"]
+        if v[0]["time"] < smallest:
+            smallest = v[0]["time"]
+        if v[-1]["time"] > biggest:
+            biggest = v[-1]["time"]
+                                                    
         tp = v[0]["p_size"] / trans_time
         num_trans += 1
         throughput_sum += tp
         throughputs[k] = tp
-
-    avg_tp = throughput_sum/float(num_trans)/1000000
+    avg_tp = psum/float((biggest-smallest))
+    #avg_tp = throughput_sum/float(num_trans)/1000000
     avg_lat = total_trans_time/float(num_trans)
     drop_rate = drop_ctr/float(len(throughputs.keys()))
     print "Average Throughput = {0} Mbps".format(avg_tp)
