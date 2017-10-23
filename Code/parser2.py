@@ -8,7 +8,7 @@ import numpy as np
 
 def graph(drop, lat, tp):
     filenames = ["Vegas/Vegas", "Reno/Reno", "Newreno/Reno", "Newreno/Vegas"]
-    ylabels = ["Drop Rate", "Average Latency", "Average Throughput"]
+    ylabels = ["# Dropped Packets", "Average Latency", "Average Throughput"]
     colors = ["red", "blue", "green", "purple"]
     data = [drop, lat, tp]
     for i, yl, c in zip(data, ylabels, colors):
@@ -16,7 +16,7 @@ def graph(drop, lat, tp):
         plt.bar(y_pos, i, align='center', color=c)
         plt.xticks(y_pos, filenames)
         plt.ylabel(yl)
-        plt.title("{0} over range of Packet Sizes - 1Mbps, 1000Byte Packet Size".format(yl))
+        plt.title("{0} over range of Packet Sizes - 4Mbps, 10,000Byte Packet Size".format(yl))
         plt.savefig("Figures/{0}_v_Variants".format(yl))
         plt.clf()
 
@@ -36,7 +36,8 @@ def parse(filename):
         output["fid"] = int(parts[-5])
         output["src_addr"] = float(parts[-4])
         output["dest_addr"] = float(parts[-3])
-        outputs[p_id].append(output)
+        if output["p_type"] == "tcp":
+            outputs[p_id].append(output)
     sorted_outputs = defaultdict(list)
     for k,v in outputs.items():
         newlist = sorted(v, key=lambda k: k['time']) 
@@ -54,16 +55,23 @@ def parse(filename):
         tp = -1 # if packet transmission incomplete
         trans_time = v[-1]["time"] - v[0]["time"]
         total_trans_time += trans_time
-        if v[0]["fid"] == 1:
-            tp_1_4.append(v[0]["p_size"] /  (v[-1]["time"] - v[0]["time"]))
-        if v[0]["fid"] == 2:
-            tp_5_6.append(v[0]["p_size"] /  (v[-1]["time"] - v[0]["time"]))
-        #if not (v[-1]["event"] == "r" and float(v[-1]["to_node"]) == float(v[-1]["dest_addr"])):
+
+        next_iter = 0
         for value in v:
             if value["event"] == "d":
                 drop_ctr += 1
-        if trans_time == 0:
+                next_iter = 1
+                break
+            
+        if next_iter == 1:
             continue
+            
+        if v[0]["fid"] == 5:
+            tp_1_4.append(v[0]["p_size"] /  (v[-1]["time"] - v[0]["time"]))
+        if v[0]["fid"] == 10:
+            tp_5_6.append(v[0]["p_size"] /  (v[-1]["time"] - v[0]["time"]))
+        
+
         tp = v[0]["p_size"] / trans_time
         num_trans += 1
         throughput_sum += tp
@@ -71,7 +79,7 @@ def parse(filename):
 
     avg_tp = throughput_sum/float(num_trans)/1000000
     avg_lat = total_trans_time/float(num_trans)
-    drop_rate = drop_ctr/float(len(throughputs.keys()))
+    drop_rate = drop_ctr
     tp_14 = sum(tp_1_4) / float(len(tp_1_4)) / 1000000
     tp_56 = sum(tp_5_6) / float(len(tp_5_6)) / 1000000
     print "Avg Throughput - 1-4 = {0}".format(tp_14)
@@ -88,22 +96,17 @@ if __name__ == '__main__':
     size_range = [i for i in range(500, 10001, 2500)]
     rate_range = [i for i in range(1, 11)]
     filenames = ["Vegas_Vegas.tr", "Reno_Reno.tr", "Newreno_Reno.tr", "Newreno_Vegas.tr"]
-
-    #results = defaultdict(lambda: defaultdict(list))
     dr = []
     al = []
     at = []
     
     for fname in filenames:
         variant = fname.split(".")[0]
-        rate = 1
+        rate = 10
         packet_size = 1000
         print "\nVariant = {0}, Rate = {1}Mbps, Packet Size = {2}".format(variant, rate, packet_size)
         drop_rate, avg_lat, avg_tp = parse(fname)
-
-        #results[variant][0].append(drop_rate)
-        #results[variant][1].append(avg_lat)
-        #results[variant][2].append(avg_tp)
+        
         dr.append(drop_rate)
         al.append(avg_lat)
         at.append(avg_tp)

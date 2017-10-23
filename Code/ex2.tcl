@@ -34,29 +34,27 @@ if {$variant1 eq "Tahoe"} {
     set tcp1 [new Agent/TCP]
 } else {
     set tcp1 [new Agent/TCP/$variant1]
-
 }
 
-$tcp1 set class_ 1
+$tcp1 set class_ 5
 $ns attach-agent $n1 $tcp1
 set sink1 [new Agent/TCPSink]
 $ns attach-agent $n4 $sink1
 $ns connect $tcp1 $sink1
-$tcp1 set fid_ 1
+$tcp1 set fid_ 5
 
 if {$variant2 eq "Tahoe"} {
     set tcp2 [new Agent/TCP]
 } else {
-    set tcp2 [new Agent/TCP/$variant2]
-
+     set tcp2 [new Agent/TCP/$variant2]
 }
 
-$tcp2 set class_ 2
+$tcp2 set class_ 10
 $ns attach-agent $n5 $tcp2
 set sink2 [new Agent/TCPSink]
 $ns attach-agent $n6 $sink2
 $ns connect $tcp2 $sink2
-$tcp2 set fid_ 2
+$tcp2 set fid_ 10
 
 set ftp1 [new Application/FTP]
 $ftp1 attach-agent $tcp1
