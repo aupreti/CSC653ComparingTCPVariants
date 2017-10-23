@@ -87,7 +87,7 @@ def parse(filename):
         num_trans += 1
         throughput_sum += tp
         throughputs[k] = tp
-    avg_tp = psum/float((biggest-smallest))
+    avg_tp = psum/float((biggest-smallest))/1000000
     #avg_tp = throughput_sum/float(num_trans)/1000000
     avg_lat = total_trans_time/float(num_trans)
     drop_rate = drop_ctr/float(len(throughputs.keys()))
