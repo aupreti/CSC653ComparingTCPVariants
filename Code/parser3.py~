@@ -48,10 +48,7 @@ def parse(filename):
     # compute throughput and keep track of drop rate
     drop_ctr_tcp = 0
     drop_ctr_cbr = 0
-    
-    num_tcp_packets=0
-    num_cbr_packets=0
-    
+
     latency_over_time_tcp=[]
     latency_over_time_cbr=[]
 
@@ -60,15 +57,10 @@ def parse(filename):
     for k, v in sorted_outputs.items():
         is_tcp_packet= (v[0]["p_type"]=='tcp')
         is_cbr_packet= (v[0]["p_type"]=='cbr')
-                        
-        if (is_tcp_packet):
-            num_tcp_packets+=1
-        
-        if (is_cbr_packet):
-            num_cbr_packets+=1
         
         tp = -1 # if packet transmission incomplete
         trans_time = v[-1]["time"] - v[0]["time"]
+
 
         #handle packet drop
         drop_found = 0
@@ -116,10 +108,9 @@ def parse(filename):
     print "Average Latency CBR= {0} seconds".format(average_latency_cbr)
     print "Latency over time TCP =%s" %(latency_over_time_tcp[:20])
     print "Latency over time CBR = %s" %(latency_over_time_cbr[:20])
-    print "Drop TCP= {0}".format(drop_ctr_tcp)
-    print "Drop CBR= {0}".format(drop_ctr_cbr)
-    print "Drop Rate TCP= {0}".format(drop_ctr_tcp/float(num_tcp_packets))
-    print "Drop Rate CBR= {0}".format(drop_ctr_cbr/float(num_cbr_packets))
+    print "Drop Rate TCP= {0}".format(drop_ctr_tcp)
+    print "Drop Rate CBR= {0}".format(drop_ctr_cbr)
+
     #return drop_rate, avg_lat, avg_tp
                 
 

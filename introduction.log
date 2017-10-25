@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  22 OCT 2017 18:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  22 OCT 2017 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,6 +6,15 @@ entering extended mode
 (./introduction.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
+! Undefined control sequence.
+l.1  \section
+             {Introduction}\label{sec:introduction}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
 
 ! LaTeX Error: Missing \begin{document}.
 
@@ -13,12 +22,23 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.1  W
-      eb traffic runs over TCP and given the scale at which the internet has...
-
+l.1  \section{I
+               ntroduction}\label{sec:introduction}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
+Missing character: There is no I in font nullfont!
+Missing character: There is no n in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no n in font nullfont!
 Missing character: There is no W in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no b in font nullfont!
@@ -403,7 +423,7 @@ Missing character: There is no [ in font nullfont!
 ! Undefined control sequence.
 <write> ...: Citation `\@citeb ' on page \thepage 
                                                   \space undefined\on@line .
-l.1 ... percent in sales~\cite{kohavi_online_2007}
+l.2 ... percent in sales~\cite{kohavi_online_2007}
                                                   . Higher latency/wait-time...
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -412,7 +432,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-LaTeX Warning: Citation `kohavi_online_2007' on page  undefined on input line 1
+LaTeX Warning: Citation `kohavi_online_2007' on page  undefined on input line 2
 .
 
 Missing character: There is no ] in font nullfont!
@@ -973,12 +993,12 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no e in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 1--2
-[]
+Overfull \hbox (20.0pt too wide) in paragraph at lines 1--3
+[][]
  []
 
 
-Overfull \hbox (5.43053pt too wide) in paragraph at lines 1--2
+Overfull \hbox (5.43053pt too wide) in paragraph at lines 1--3
 []
  []
 
@@ -989,7 +1009,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.3 C
+l.4 C
      ongestion control algorithm for TCP was proposed by Van Jacobson  in re...
 
 You're in trouble here.  Try typing  <return>  to proceed.
@@ -2160,7 +2180,7 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no s in font nullfont!
 Missing character: There is no . in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 3--4
+Overfull \hbox (20.0pt too wide) in paragraph at lines 4--5
 []
  []
 
@@ -2171,7 +2191,7 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.5  W
+l.6  W
       e conduct three different simulation studies in this paper:\\
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
@@ -2229,7 +2249,7 @@ Missing character: There is no e in font nullfont!
 Missing character: There is no r in font nullfont!
 Missing character: There is no : in font nullfont!
 
-Overfull \hbox (20.0pt too wide) in paragraph at lines 5--6
+Overfull \hbox (20.0pt too wide) in paragraph at lines 6--7
 []
  []
 
