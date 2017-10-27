@@ -13,10 +13,10 @@ def graph1(results):
         for k, v in results.items():
             plt.plot(rate, v[i], color=colors[ctr], label=k)
             ctr += 1
-        plt.xlabel("Transmission Rate (Mbps)")
+        plt.xlabel("CBR (Mbps)")
         plt.ylabel(ylabels[i])
-        plt.title("{0} over range of Transmission Rates - 1000Bytes".format(ylabels[i]))
-        plt.legend(loc="upper right")
+        plt.title("{0} over range of Transmission Rates".format(ylabels[i]))
+        plt.legend(loc="upper left")
         plt.savefig("Figures/Rate_v_{0}".format(ylabels[i]))
         plt.clf()
     
@@ -32,8 +32,8 @@ def graph2(results):
             ctr += 1
         plt.xlabel("Packet Size (Bytes)")
         plt.ylabel(ylabels[i])
-        plt.title("{0} over range of Packet Sizes - 2Mbps".format(ylabels[i]))
-        plt.legend(loc="upper right")
+        plt.title("{0} over range of Packet Sizes".format(ylabels[i]))
+        plt.legend(loc="upper left")
         plt.savefig("Figures/PacketSize_v_{0}".format(ylabels[i]))
         plt.clf()
 
@@ -52,7 +52,7 @@ def parse(filename):
         p_id = int(parts[-1])
         output["src_addr"] = parts[-4]
         output["dest_addr"] = parts[-3]
-        if output["p_type"] = "tcp":
+        if output["p_type"] == "tcp":
             outputs[p_id].append(output)
     sorted_outputs = defaultdict(list)
     for k,v in outputs.items():
